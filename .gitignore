@@ -4,6 +4,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # User-specific files
+logTest.py
+[Dd]ata/
 *.rsuser
 *.suo
 *.user
