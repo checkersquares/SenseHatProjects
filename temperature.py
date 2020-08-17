@@ -8,38 +8,41 @@ class TempSystem(Enum):
 
 class Temperature(measurement.Measurement):
     def __init__(self, value, system = TempSystem.Kelvin, precision=2):
-        self.Sensor = "Temperature"
-        self.Value = value
+        super().__init__("Temperature")
         self.System = system
-        self.Precision = pow(10, precision)
-    def toKelvin(self):
+        self.setTemp(value, system)
+    def toKelvin(self, value, precision):
         res = 0.0
+        p = pow(10, precision)
         if self.System == TempSystem.Kelvin:
-            res =  self.Value
+            res =  value
         elif self.System == TempSystem.Celsius:
-            res = self.Value + 273.15
+            res = value + 273.15
         elif self.System == TempSystem.Farenheit:
-            res = ((self.Value - 32) / 1.8) + 273.15
-        return round(res * self.Precision) / self.Precision
-    def toCelsius(self):
+            res = ((value - 32) / 1.8) + 273.15
+        return round(res * p) / p
+    def toCelsius(self, value, precision):
+        res = 0.0
+        p = pow(10, precision)
         if self.System == TempSystem.Kelvin:
-            res = self.Value - 273.15
+            res = value - 273.15
         elif self.System == TempSystem.Celsius:
-            res = self.Value
+            res = value
         elif self.System == TempSystem.Farenheit:
-            res = ((self.Value - 32) / 1.8)
-        return round(res * self.Precision) / self.Precision
-    def toFahrenheit(self):
+            res = ((value - 32) / 1.8)
+        return round(res * p) / p
+    def toFahrenheit(self, value, precision):
+        res = 0.0
+        p = pow(10, precision)
         if self.System == TempSystem.Kelvin:
-            res = ((self.Value - 273.15) * 1.8) + 32
+            res = ((value - 273.15) * 1.8) + 32
         elif self.System == TempSystem.Celsius:
-            res = (self.Value * 1.8) + 32
+            res = (value * 1.8) + 32
         elif self.System == TempSystem.Farenheit:
-            res = self.Value
-        return round(res * self.Precision) / self.Precision
-    def getTemp(self):
-        res = {}
-        res["K"] = self.toKelvin()
-        res["C"] = self.toCelsius()
-        res["F"] = self.toFahrenheit()
-        return res
+            res = value
+        return round(res * p) / p
+    def setTemp(self, value, system = TempSystem.Kelvin, precision = 2):
+        self.System = system
+        self.Data["K"] = self.toKelvin(value, precision)
+        self.Data["C"] = self.toCelsius(value, precision)
+        self.Data["F"] = self.toFahrenheit(value, precision)

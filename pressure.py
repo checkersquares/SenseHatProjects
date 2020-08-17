@@ -1,6 +1,6 @@
 import measurement
 
-class Barometer(measurement.Measurement):
+class Pressure(measurement.Measurement):
     def __init__(self, value):
-        self.Sensor = "Pressure"
-        self.Value = value
+        super().__init__("Pressure")
+        self.Data[str(self.Sensor)] = value
