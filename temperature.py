@@ -1,12 +1,14 @@
 from enum import Enum
+import measurement
 
 class TempSystem(Enum):
     Kelvin = 0
     Celsius = 1
     Farenheit = 2
 
-class Temperature():
+class Temperature(measurement.Measurement):
     def __init__(self, value, system = TempSystem.Kelvin, precision=2):
+        self.Sensor = "Temperature"
         self.Value = value
         self.System = system
         self.Precision = pow(10, precision)
@@ -35,3 +37,9 @@ class Temperature():
         elif self.System == TempSystem.Farenheit:
             res = self.Value
         return round(res * self.Precision) / self.Precision
+    def getTemp(self):
+        res = {}
+        res["K"] = self.toKelvin()
+        res["C"] = self.toCelsius()
+        res["F"] = self.toFahrenheit()
+        return res
