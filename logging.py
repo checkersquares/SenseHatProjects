@@ -5,19 +5,18 @@ import measurement
 class SensorLogEntry():
     def __init__(self, measurement): 
         self.Measurement = measurement
-        self.Timestamp = datetime.datetime.now()
         self.save()
         self.log()
     def toString(self):
         res = ""
-        res += self.Timestamp.strftime("%H:%M:%S - ")
+        res += self.Measurement.Timestamp.strftime("%H:%M:%S - ")
         res += self.Measurement.Sensor
         for key, value in self.Measurement.Data.items():
             res += " - " + str(key) + ": " + str(value)
         return res
     def toJson(self):
         res = {}
-        res["timestamp"] = self.Timestamp.timestamp()
+        res["timestamp"] = self.Measurement.Timestamp.timestamp()
         res["sensor"] = self.Measurement.Sensor
         res["data"] = []
         for key, value in self.Measurement.Data.items():
@@ -25,7 +24,7 @@ class SensorLogEntry():
         return res
     # creates human readble log entries
     def log(self):
-        with open("logs/" + self.Timestamp.strftime("%Y-%m-%d_") + self.Measurement.Sensor + "_Log.txt", "a") as logfile:
+        with open("logs/" + self.Measurement.Timestamp.strftime("%Y-%m-%d_") + self.Measurement.Sensor + "_Log.txt", "a") as logfile:
             logfile.write(self.toString())
             logfile.write("\r")
     # creates json data that can be read and evaluated

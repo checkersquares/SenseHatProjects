@@ -1,4 +1,5 @@
 from enum import Enum
+import datetime
 
 class MeasureType(Enum):
     Accelerometer = 0
@@ -12,6 +13,7 @@ class MeasureType(Enum):
 class Measurement():
     def __init__(self, sensor): 
         self.Sensor = sensor
+        self.Timestamp = datetime.datetime.now()
         self.Data = {}
     def getData(self):
         return self.Data
